@@ -4,6 +4,7 @@ body {
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 #map {
@@ -12,6 +13,7 @@ body {
   bottom: 0;
   width: 100%;
 }
+
 .sidebar {
   background-color: rgba(35, 55, 75, 0.9);
   color: #fff;
@@ -46,6 +48,7 @@ code {
 .map-container {
   height: 100vh;
   width: 50vw;
+  position: absolute;
 }
 
 .geocoder {
@@ -55,4 +58,16 @@ code {
   right: 7%;
   margin-right: -25%;
   top: 3%;
+}
+.btn {
+  z-index: 1;
+  position: absolute;
+  bottom: 5%;
+  left: 17%;
+}
+.btn1 {
+  width: 32%;
+  color: #fff;
+  background-color: black;
+  border: none;
 }

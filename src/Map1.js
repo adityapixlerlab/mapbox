@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
-
+import * as turf from "@turf/turf";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
@@ -21,88 +21,88 @@ function Map1() {
         type: "Feature",
         geometry: {
           type: "Point",
-          coordinates: [75.8506, 30.9101],
+          coordinates: [-71.0548, 42.3601],
         },
         properties: {
-          title: "Ludhiana",
-          description: "Sher Shah Suri Marg-GT Road",
+          title: "Boston",
+          description: "Quincy Market",
         },
       },
       {
         type: "Feature",
         geometry: {
           type: "Point",
-          coordinates: [75.7683, 31.2201],
+          coordinates: [-71.0624, 42.3631],
         },
         properties: {
-          title: "Phagwara",
-          description: "Bus Stand",
+          title: "West End",
+          description: "West End Market",
         },
       },
       {
         type: "Feature",
         geometry: {
           type: "Point",
-          coordinates: [75.4791, 31.1272],
+          coordinates: [-71.0543, 42.3647],
         },
         properties: {
-          title: "Nakodar",
-          description: "Kapurthala-Nakodar Road",
+          title: "North End ",
+          description: "Polcari Park",
         },
       },
       {
         type: "Feature",
         geometry: {
           type: "Point",
-          coordinates: [75.1745, 30.8265],
+          coordinates: [-71.0678, 42.3592],
         },
         properties: {
-          title: "Moga",
-          description: "Hans Raj Hospital",
+          title: "Beacon Hill",
+          description: "Beacon Hill Market",
         },
       },
       {
         type: "Feature",
         geometry: {
           type: "Point",
-          coordinates: [76.1148, 31.1259],
+          coordinates: [-71.0554, 42.3557],
         },
         properties: {
-          title: "Nawashaher",
-          description: "Arya Samaj Road",
+          title: "Financial District",
+          description: "franklin St",
         },
       },
       {
         type: "Feature",
         geometry: {
           type: "Point",
-          coordinates: [76.1442, 31.2155],
+          coordinates: [-71.0626, 42.352],
         },
         properties: {
-          title: "Garshankar",
-          description: "Dr. Vishesh Kumar",
+          title: "China Tower",
+          description: "Washington St",
         },
       },
       {
         type: "Feature",
         geometry: {
           type: "Point",
-          coordinates: [76.1637, 30.8471],
+          coordinates: [-71.0502, 42.3576],
         },
         properties: {
-          title: "Samrala",
-          description: "Bharhla to NH95 Link Road",
+          title: "Water Front",
+          description: "Harbol Towers",
         },
       },
       {
         type: "Feature",
         geometry: {
           type: "Point",
-          coordinates: [75.5756, 31.3315],
+          coordinates: [-71.0771, 42.341],
         },
         properties: {
-          title: "Jalandhar",
-          description: "Goel Hospital",
+          title: "South End",
+          description: "South End Library Park",
         },
       },
     ],
@@ -159,13 +159,49 @@ function Map1() {
 
     map.current.addControl(new mapboxgl.FullscreenControl());
 
-    map.current.addControl(new mapboxgl.NavigationControl());
+    var nav = new mapboxgl.NavigationControl({
+      showCompass: false,
+      showZoom: true,
+    });
+
+    map.current.addControl(nav, "bottom-left");
+
+    map.current.on("load", function () {
+      let _center = turf.point([-71.0548, 42.3601]);
+      let _radius = 2;
+      let _options = {
+        units: "kilometers",
+      };
+
+      let _circle = turf.circle(_center, _radius, _options);
+
+      map.current.addSource("circleData", {
+        type: "geojson",
+        data: _circle,
+      });
+
+      map.current.addLayer({
+        id: "circle-fill",
+        type: "fill",
+        source: "circleData",
+        paint: {
+          "fill-color": "#3498DB ",
+          "fill-opacity": 0.3,
+        },
+      });
+    });
   };
 
   return (
     <div>
       <div className="sidebar">
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+      </div>
+      <div className="btn"></div>
+      <div className="btn">
+        <button className="btn1">50</button>
+        <button className="btn1">100</button>
+        <button className="btn1">200</button>
       </div>
       <div id="map"></div>
       <div ref={mapContainer} className="map-container" />
