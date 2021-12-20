@@ -132,6 +132,7 @@ function Map1() {
             `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`
           )
         )
+
         .addTo(map.current);
     }
 
@@ -144,6 +145,16 @@ function Map1() {
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl,
+      marker: false,
+      bbox: [-179.9, 18.8163608007951, -66.8847646185949, 71.4202919997506], // Boundary for us
+      proximity: {
+        longitude: -97.9222112121185,
+        latitude: 39.3812661305678,
+      },
+    });
+
+    geocoder.on("results", function (res) {
+      console.log(res);
     });
     document.getElementById("geocoder").appendChild(geocoder.onAdd(map.current));
 
@@ -157,7 +168,7 @@ function Map1() {
       })
     );
 
-    map.current.addControl(new mapboxgl.FullscreenControl());
+    map.current.addControl(new mapboxgl.FullscreenControl(), "top-left");
 
     var nav = new mapboxgl.NavigationControl({
       showCompass: false,
@@ -168,7 +179,7 @@ function Map1() {
 
     map.current.on("load", function () {
       let _center = turf.point([-71.0548, 42.3601]);
-      let _radius = 2;
+      let _radius = 6;
       let _options = {
         units: "kilometers",
       };
@@ -197,7 +208,9 @@ function Map1() {
       <div className="sidebar">
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
       </div>
-      <div className="btn"></div>
+      <div>
+        <button className="fullscreen">Expand</button>
+      </div>
       <div className="btn">
         <button className="btn1">50</button>
         <button className="btn1">100</button>
@@ -205,7 +218,7 @@ function Map1() {
       </div>
       <div id="map"></div>
       <div ref={mapContainer} className="map-container" />
-      <div id="geocoder" class="geocoder"></div>
+      <div id="geocoder" className="geocoder"></div>
     </div>
   );
 }

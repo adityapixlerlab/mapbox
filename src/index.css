@@ -63,11 +63,29 @@ code {
   z-index: 1;
   position: absolute;
   bottom: 5%;
-  left: 17%;
+  left: 157px;
+  width: 324px;
 }
 .btn1 {
   width: 32%;
-  color: #fff;
-  background-color: black;
+  height: 40px;
   border: none;
+  background: rgba(0, 0, 0, 0.7);
+}
+.mapboxgl-ctrl button.mapboxgl-ctrl-fullscreen .mapboxgl-ctrl-icon {
+  background-image: url("../src/Group\ 37.png");
+}
+.mapboxgl-ctrl button.mapboxgl-ctrl-shrink .mapboxgl-ctrl-icon {
+  background-image: url("../src/Group\ 37.png");
+}
+.mapboxgl-ctrl-fullscreen {
+  top: 52px;
+  position: absolute;
+}
+.fullscreen {
+  z-index: 1;
+  position: absolute;
+  top: 7%;
+  left: 38px;
+  height: 29px;
 }
